@@ -1,8 +1,9 @@
-use gtk4 as gtk;
+use gtk4::prelude::BoxExt;
+use gtk4::{self as gtk, Orientation};
 
 use gtk::glib::ExitCode;
 use gtk::prelude::{ApplicationExt, ApplicationExtManual, ButtonExt, GtkWindowExt};
-use gtk::{Application, ApplicationWindow, Button};
+use gtk::{Application, ApplicationWindow, Box, Button};
 
 fn main() -> ExitCode {
     // Create a new application with a unique application ID.
@@ -22,26 +23,34 @@ fn build_ui(app: &Application) {
     let window = ApplicationWindow::builder()
         .application(app)
         .title("disksync")
-        .default_width(400)
-        .default_height(300)
+        .default_width(200)
+        .build();
+
+    let vbox = Box::builder()
+        .orientation(Orientation::Vertical)
+        .spacing(16)
+        .margin_top(16)
+        .margin_start(16)
+        .margin_bottom(16)
+        .margin_end(16)
         .build();
 
     // Create a button with an initial label.
-    let button = Button::builder()
-        .label("Click me!")
-        .margin_top(16)
-        .margin_start(16)
-        .margin_end(16)
-        .margin_bottom(16)
-        .build();
+    let button1 = Button::with_label("sync");
+    let button2 = Button::with_label("umount");
+    let button3 = Button::with_label("power-off");
+
+    vbox.append(&button1);
+    vbox.append(&button2);
+    vbox.append(&button3);
 
     // When the button is clicked, change its label.
-    button.connect_clicked(|btn| {
+    button1.connect_clicked(|btn| {
         btn.set_label("Hello, World!");
     });
 
     // Set the window's child to be the button.
-    window.set_child(Some(&button));
+    window.set_child(Some(&vbox));
 
     // Present (display) the window.
     window.present();
