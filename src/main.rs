@@ -27,7 +27,13 @@ fn build_ui(app: &Application) {
         .build();
 
     // Create a button with an initial label.
-    let button = Button::with_label("Click me!");
+    let button = Button::builder()
+        .label("Click me!")
+        .margin_top(16)
+        .margin_start(16)
+        .margin_end(16)
+        .margin_bottom(16)
+        .build();
 
     // When the button is clicked, change its label.
     button.connect_clicked(|btn| {
